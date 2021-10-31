@@ -20,19 +20,15 @@ User.init(
       unique: true,
       allowNull: false,
       validate: {
-        isEmail: {
-          msg: "Not a valid email address",
-        },
+        isEmail: true,
       },
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: {
-          args: [8, 50],
-          msg: "Password min length 8 character",
-        },
+        notEmpty: true,
+        len: [(6, 50)],
       },
     },
   },
