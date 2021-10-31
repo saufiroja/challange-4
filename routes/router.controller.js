@@ -11,5 +11,6 @@ router.get("/history", controller.history);
 
 // post
 router.post("/register-user", controller.createRegister);
+router.post("/login-user", controller.createLogin);
 
 module.exports = router;
