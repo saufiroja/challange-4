@@ -2,6 +2,7 @@ const { APP_SECRET } = process.env;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/User.Model");
+const Biodata = require("../models/Biodata.Model");
 
 // create token
 const maxAge = 3 * 24 * 60 * 60;
@@ -17,8 +18,15 @@ const login = (req, res) => {
   return res.render("login");
 };
 
-const biodata = (req, res) => {
-  return res.render("biodata");
+const biodata = async (req, res) => {
+  const data = await Biodata.findAll();
+  return res.render("biodata", {
+    data,
+  });
+};
+
+const addBiodata = (req, res) => {
+  return res.render("add-biodata");
 };
 
 const history = (req, res) => {
@@ -46,6 +54,7 @@ const createRegister = async (req, res) => {
   }
 };
 
+// create user login
 const createLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -67,6 +76,22 @@ const createLogin = async (req, res) => {
   }
 };
 
+// create biodata
+const createBiodata = async (req, res) => {
+  try {
+    const { name, description } = req.body;
+
+    await Biodata.create({
+      name,
+      description,
+    });
+
+    return res.status(301).redirect("/biodata");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -74,4 +99,6 @@ module.exports = {
   history,
   createRegister,
   createLogin,
+  createBiodata,
+  addBiodata,
 };

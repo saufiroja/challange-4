@@ -23,14 +23,14 @@ Biodata.init(
       allowNull: false,
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
   },
   {
     sequelize,
-    tableName: "Biodata",
-    modelName: "Bio",
+    tableName: "Biodatas",
+    modelName: "Biodata",
     timestamps: true,
   }
 );
