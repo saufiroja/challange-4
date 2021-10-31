@@ -1,12 +1,12 @@
+const { APP_SECRET } = process.env;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/User.Model");
 
-const { APP_SECRET, SALT_ROUND } = process.env;
-
 // create token
+const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  return jwt.sign({ id }, APP_SECRET, { expiresIn: "7 days" });
+  return jwt.sign({ id }, APP_SECRET, { expiresIn: maxAge });
 };
 
 const register = (req, res) => {
@@ -30,18 +30,40 @@ const createRegister = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const hashPassword = await bcrypt.hash(password, SALT_ROUND);
+    const hashPassword = await bcrypt.hash(password, 12);
 
-    await User.create({
+    const user = await User.create({
       email,
       password: hashPassword,
     });
 
     const token = await createToken(user.id);
+    res.cookie("jwt", token, { maxAge: maxAge * 1000, httpOnly: true });
 
     return res.status(201).redirect("/");
   } catch (error) {
-    console.log(error);
+    console.log(message.error);
+  }
+};
+
+const createLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({
+      where: {
+        email,
+      },
+    });
+
+    await bcrypt.compare(password, user.password);
+
+    const token = await createToken(user.id);
+    res.cookie("jwt", token, { maxAge: maxAge * 1000, httpOnly: true });
+
+    return res.status(201).redirect("/");
+  } catch (error) {
+    console.log(message.error);
   }
 };
 
@@ -51,4 +73,5 @@ module.exports = {
   biodata,
   history,
   createRegister,
+  createLogin,
 };
