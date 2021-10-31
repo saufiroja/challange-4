@@ -4,6 +4,8 @@ const sequelize = require("./index");
 class User extends Model {
   static associations(models) {
     User.Roles = User.hasMany(models.Role);
+    User.Biodata = User.hasMany(models.Biodata);
+    User.History = User.hasMany(models.History);
   }
 }
 
