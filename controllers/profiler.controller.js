@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/User.Model");
 const Biodata = require("../models/Biodata.Model");
-
+const History = require("../models/History.Model");
 // create token
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -25,12 +25,19 @@ const biodata = async (req, res) => {
   });
 };
 
+const history = async (req, res) => {
+  const data = await History.findAll();
+  return res.render("history", {
+    data,
+  });
+};
+
 const addBiodata = (req, res) => {
   return res.render("add-biodata");
 };
 
-const history = (req, res) => {
-  return res.render("history");
+const addHistory = (req, res) => {
+  return res.render("add-history");
 };
 
 // create user register
@@ -92,6 +99,21 @@ const createBiodata = async (req, res) => {
   }
 };
 
+const createRekor = async (req, res) => {
+  try {
+    const { win, lose } = req.body;
+
+    await History.create({
+      win,
+      lose,
+    });
+
+    return res.status(301).redirect("/history");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -101,4 +123,6 @@ module.exports = {
   createLogin,
   createBiodata,
   addBiodata,
+  createRekor,
+  addHistory,
 };

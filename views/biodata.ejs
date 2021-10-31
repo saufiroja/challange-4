@@ -31,6 +31,7 @@
               <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
+                <th scope="col">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -38,6 +39,13 @@
               <tr>
                 <td><%= bio.name %></td>
                 <td><%= bio.description %></td>
+                <form action="/biodata?_method=DELETE" method="POST">
+                  <td>
+                    <button type="submit" class="btn btn-danger badge">
+                      Delete
+                    </button>
+                  </td>
+                </form>
               </tr>
               <% })%>
             </tbody>
