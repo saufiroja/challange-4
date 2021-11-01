@@ -11,7 +11,7 @@ router.get("/biodata", requireAuth, controller.biodata);
 router.get("/biodata/add-biodata", controller.addBiodata);
 router.get("/history", requireAuth, controller.history);
 router.get("/history/add-history", controller.addHistory);
-router.get("/biodata/edit-biodata", controller.editBiodata);
+router.get("/biodata/edit-biodata/:id", controller.editBiodata);
 
 // post
 router.post("/register-user", controller.createRegister);

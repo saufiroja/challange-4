@@ -42,7 +42,7 @@ const addHistory = (req, res) => {
 
 const editBiodata = async (req, res) => {
   const { id } = req.params;
-  const data = await Biodata.findOne({ id });
+  const data = await Biodata.findByPk({ id });
   return res.render("edit-biodata", { data });
 };
 
