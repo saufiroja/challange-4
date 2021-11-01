@@ -31,6 +31,7 @@
               <tr>
                 <th scope="col">Win</th>
                 <th scope="col">Lose</th>
+                <th scope="col">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -38,6 +39,12 @@
               <tr>
                 <td><%= his.win %></td>
                 <td><%= his.lose %></td>
+                <td>
+                  <form action="/history/:id" method="DELETE">
+                    <input type="hidden" name="id" value="<%= data.id %>" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+                </td>
               </tr>
               <% })%>
             </tbody>

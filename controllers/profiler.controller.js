@@ -40,6 +40,15 @@ const addHistory = (req, res) => {
   return res.render("add-history");
 };
 
+const editBiodata = async (req, res) => {
+  const { id } = req.params;
+  const data = await Biodata.findOne({ id });
+  return res.render("edit-biodata", { data });
+};
+
+const hapusHistory = async (req, res) => {
+  await History.findByPk({ id: req.params.id });
+};
 // create user register
 const createRegister = async (req, res) => {
   try {
@@ -117,41 +126,87 @@ const createRekor = async (req, res) => {
 // update biodata
 const updateBiodata = async (req, res) => {
   try {
-    const {id} = req.params;
-    const {name, description} = req.body;
-    const data = await Biodata.update({
-     name,
-     description
-    },
-    {
-      where: {
-        id
+    const { id } = req.params;
+    const { name, description } = req.body;
+    await Biodata.update(
+      {
+        name,
+        description,
+      },
+      {
+        where: {
+          id,
+        },
       }
-    });
-    res.json({
-      "msg": "Biodata Updated"
-    })
+    );
+    return res.status(201).redirect("/biodata");
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 // update history
 const updateHistory = async (req, res) => {
   try {
-    const {id} = req.params;
-    const data = await Biodata.update({
-      where: {
-        id
+    const { id } = req.params;
+    const { win, lose } = req.body;
+    const data = await History.update(
+      {
+        win,
+        lose,
+      },
+      {
+        where: {
+          id,
+        },
       }
-    });
+    );
     res.json({
-      "msg": "History Updated"
-    })
+      msg: "History Updated",
+      data,
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
+
+// delete biodata
+const deleteBiodata = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await Biodata.destroy({
+      where: {
+        id,
+      },
+    });
+
+    res.json({
+      msg: "success deleted",
+      data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteHistory = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const data = await History.destroy({
+      where: {
+        id,
+      },
+    });
+
+    res.json({
+      msg: "success deleted",
+      data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   register,
@@ -165,5 +220,9 @@ module.exports = {
   createRekor,
   addHistory,
   updateBiodata,
-  updateHistory
+  updateHistory,
+  deleteBiodata,
+  deleteHistory,
+  editBiodata,
+  hapusHistory,
 };

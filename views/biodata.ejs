@@ -24,13 +24,14 @@
             class="btn btn-primary"
             onclick="location.href='/biodata/add-biodata'"
           >
-            Tambah Barang
+            Tambah
           </button>
           <table class="table">
             <thead>
               <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
+                <th scope="col">Edit</th>
               </tr>
             </thead>
             <tbody>
@@ -38,6 +39,11 @@
               <tr>
                 <td><%= bio.name %></td>
                 <td><%= bio.description %></td>
+                <td>
+                  <form action="/biodata/edit-biodata" method="PUT">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                  </form>
+                </td>
               </tr>
               <% })%>
             </tbody>
