@@ -114,6 +114,45 @@ const createRekor = async (req, res) => {
   }
 };
 
+// update biodata
+const updateBiodata = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const {name, description} = req.body;
+    const data = await Biodata.update({
+     name,
+     description
+    },
+    {
+      where: {
+        id
+      }
+    });
+    res.json({
+      "msg": "Biodata Updated"
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// update history
+const updateHistory = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const data = await Biodata.update({
+      where: {
+        id
+      }
+    });
+    res.json({
+      "msg": "History Updated"
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   register,
   login,
@@ -125,4 +164,6 @@ module.exports = {
   addBiodata,
   createRekor,
   addHistory,
+  updateBiodata,
+  updateHistory
 };

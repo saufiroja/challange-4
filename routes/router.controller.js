@@ -18,4 +18,8 @@ router.post("/login-user", controller.createLogin);
 router.post("/create-bio", controller.createBiodata);
 router.post("/create-rekor", controller.createRekor);
 
+// put
+router.put("/biodata/:id", controller.updateBiodata);
+router.put("/history/:id", controller.updateHistory);
+
 module.exports = router;
